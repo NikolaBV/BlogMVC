@@ -1,12 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BlogMVC.Context;
+using BlogMVC.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BlogMVC.Controllers
 {
     public class BlogController : Controller
     {
+        BlogContext db;
+        public BlogController(BlogContext db)
+        {
+            this.db = db;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Blog> Blogs = db.Blogs.Select(b => b).ToList();
+            return View(Blogs);
         }
     }
 }
