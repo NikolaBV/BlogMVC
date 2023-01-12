@@ -17,5 +17,16 @@ namespace BlogMVC.Controllers
             IEnumerable<Blog> Blogs = db.Blogs.Select(b => b).ToList();
             return View(Blogs);
         }
+        public IActionResult Delete(int id)
+        {
+            Blog Blogs = db.Blogs.FirstOrDefault(b => b.Id == id);
+            if(id != null)
+            {
+                db.Remove(Blogs);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
     }
 }
